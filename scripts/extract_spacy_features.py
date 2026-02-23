@@ -14,6 +14,27 @@ except ImportError:
     print(json.dumps({'error': 'spaCy not installed'}))
     sys.exit(1)
 
+# Global cache for spaCy models (singleton pattern)
+_SPACY_MODELS = {}
+
+def get_spacy_model(model='en_core_web_sm'):
+    """
+    Get or load spaCy model (cached singleton)
+
+    Args:
+        model: spaCy model name
+
+    Returns:
+        Loaded spaCy model
+    """
+    if model not in _SPACY_MODELS:
+        try:
+            _SPACY_MODELS[model] = spacy.load(model)
+        except OSError:
+            print(f"Model {model} not found. Please run: python -m spacy download {model}", file=sys.stderr)
+            raise
+    return _SPACY_MODELS[model]
+
 def extract_spacy_features(word, context=None, model='en_core_web_sm'):
     """
     Extract morphological features for a word using spaCy
@@ -27,9 +48,8 @@ def extract_spacy_features(word, context=None, model='en_core_web_sm'):
         Feature dict
     """
     try:
-        nlp = spacy.load(model)
+        nlp = get_spacy_model(model)
     except OSError:
-        print(f"Model {model} not found. Please run: python -m spacy download {model}", file=sys.stderr)
         return {'error': f'spaCy model {model} not found'}
 
     # If no context, analyze word alone
