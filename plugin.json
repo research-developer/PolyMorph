@@ -1,0 +1,37 @@
+{
+  "name": "morphological-analysis-infrastructure",
+  "version": "1.0.0",
+  "description": "Comprehensive morphological analysis with suffix-first parsing, FST support, and multi-tool integration",
+  "author": "Preston",
+  "skills": [
+    "morph-router",
+    "suffix-lexicon",
+    "trie-suffix-lookup",
+    "fst-morphology",
+    "spacy-morph",
+    "freeling-analyzer",
+    "morfessor-segment",
+    "wordnet-morphy",
+    "data-acquisition",
+    "property-extractor"
+  ],
+  "dependencies": {
+    "python_packages": [
+      "spacy>=3.0.0",
+      "nltk>=3.8.0",
+      "marisa-trie>=1.0.0",
+      "pynini",
+      "morfessor",
+      "requests",
+      "pandas"
+    ],
+    "system_packages": [
+      "freeling"
+    ]
+  },
+  "data_sources": {
+    "morpholex": "https://github.com/hugomailhot/MorphoLex-en",
+    "nih_lexical_tools": "https://lhncbc.nlm.nih.gov/LSG/Projects/lvg/current/docs/designDoc/UDF/derivations/suffixList.html",
+    "celex": "https://catalog.ldc.upenn.edu/LDC96L14"
+  }
+}

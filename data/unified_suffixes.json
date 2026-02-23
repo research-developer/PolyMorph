@@ -1,0 +1,248 @@
+{
+  "suffixes": {
+    "-ness": {
+      "POS": "noun",
+      "source_POS": [
+        "adjective"
+      ],
+      "category": "derivational",
+      "meaning": "state or quality",
+      "examples": [
+        "happiness",
+        "sadness"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-able": {
+      "POS": "adjective",
+      "source_POS": [
+        "verb"
+      ],
+      "category": "derivational",
+      "meaning": "capable of",
+      "examples": [
+        "readable",
+        "doable"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-tion": {
+      "POS": "noun",
+      "source_POS": [
+        "verb"
+      ],
+      "category": "derivational",
+      "meaning": "act or process",
+      "examples": [
+        "creation",
+        "action"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ing": {
+      "POS": [
+        "verb",
+        "noun"
+      ],
+      "source_POS": [
+        "verb"
+      ],
+      "category": "inflectional",
+      "meaning": "present participle or gerund",
+      "examples": [
+        "running",
+        "seeing"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ed": {
+      "POS": "verb",
+      "source_POS": [
+        "verb"
+      ],
+      "category": "inflectional",
+      "meaning": "past tense",
+      "examples": [
+        "walked",
+        "talked"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-s": {
+      "POS": [
+        "noun",
+        "verb"
+      ],
+      "source_POS": [
+        "noun",
+        "verb"
+      ],
+      "category": "inflectional",
+      "meaning": "plural or 3rd person singular",
+      "examples": [
+        "cats",
+        "runs"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ly": {
+      "POS": "adverb",
+      "source_POS": [
+        "adjective"
+      ],
+      "category": "derivational",
+      "meaning": "in a manner",
+      "examples": [
+        "quickly",
+        "slowly"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-er": {
+      "POS": [
+        "noun",
+        "adjective"
+      ],
+      "source_POS": [
+        "verb",
+        "adjective"
+      ],
+      "category": "derivational",
+      "meaning": "one who does or comparative",
+      "examples": [
+        "teacher",
+        "bigger"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-est": {
+      "POS": "adjective",
+      "source_POS": [
+        "adjective"
+      ],
+      "category": "inflectional",
+      "meaning": "superlative",
+      "examples": [
+        "biggest",
+        "fastest"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ment": {
+      "POS": "noun",
+      "source_POS": [
+        "verb"
+      ],
+      "category": "derivational",
+      "meaning": "result or means",
+      "examples": [
+        "government",
+        "movement"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ity": {
+      "POS": "noun",
+      "source_POS": [
+        "adjective"
+      ],
+      "category": "derivational",
+      "meaning": "state or quality",
+      "examples": [
+        "clarity",
+        "simplicity"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-less": {
+      "POS": "adjective",
+      "source_POS": [
+        "noun"
+      ],
+      "category": "derivational",
+      "meaning": "without",
+      "examples": [
+        "hopeless",
+        "careless"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ful": {
+      "POS": "adjective",
+      "source_POS": [
+        "noun"
+      ],
+      "category": "derivational",
+      "meaning": "full of",
+      "examples": [
+        "hopeful",
+        "careful"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ize": {
+      "POS": "verb",
+      "source_POS": [
+        "adjective",
+        "noun"
+      ],
+      "category": "derivational",
+      "meaning": "make or become",
+      "examples": [
+        "modernize",
+        "realize"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    },
+    "-ous": {
+      "POS": "adjective",
+      "source_POS": [
+        "noun"
+      ],
+      "category": "derivational",
+      "meaning": "having quality of",
+      "examples": [
+        "dangerous",
+        "famous"
+      ],
+      "sources": [
+        "builtin"
+      ]
+    }
+  },
+  "metadata": {
+    "total_suffixes": 15,
+    "sources": [
+      "builtin"
+    ],
+    "note": "Minimal suffix database - run data acquisition for full database"
+  }
+}

@@ -1,0 +1,18 @@
+# Test dependencies for morphological analysis CLI
+
+# Core testing framework
+pytest>=7.0.0
+pytest-cov>=4.0.0        # Coverage reporting
+pytest-timeout>=2.1.0    # Test timeouts
+pytest-xdist>=3.0.0      # Parallel test execution
+
+# Assertion helpers
+pytest-mock>=3.10.0      # Mocking utilities
+
+# Output formatting
+pytest-html>=3.1.0       # HTML test reports
+
+# Already installed (from main requirements)
+# spacy>=3.0.0
+# nltk>=3.8.0
+# marisa-trie>=1.0.0
