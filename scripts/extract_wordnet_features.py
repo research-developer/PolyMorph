@@ -15,6 +15,25 @@ except ImportError:
     print(json.dumps({'error': 'NLTK not installed'}))
     sys.exit(1)
 
+# Global cache to ensure WordNet is loaded once (singleton pattern)
+_WORDNET_INITIALIZED = False
+
+def ensure_wordnet_loaded():
+    """
+    Ensure WordNet is loaded (singleton pattern)
+
+    First call triggers loading, subsequent calls are instant
+    """
+    global _WORDNET_INITIALIZED
+    if not _WORDNET_INITIALIZED:
+        # Trigger WordNet loading by making a dummy query
+        try:
+            _ = wn.synsets('test')
+            _WORDNET_INITIALIZED = True
+        except Exception:
+            pass
+    return _WORDNET_INITIALIZED
+
 def extract_wordnet_features(word):
     """
     Extract features using WordNet morphy and synsets
@@ -25,6 +44,9 @@ def extract_wordnet_features(word):
     Returns:
         Feature dict
     """
+    # Ensure WordNet is loaded (cached after first call)
+    ensure_wordnet_loaded()
+
     results = {
         'word': word,
         'source': 'wordnet',

@@ -24,6 +24,25 @@ try:
 except ImportError:
     HAS_PHONEMIZER = False
 
+# Global cache to ensure pronouncing dictionary is loaded once
+_PRONOUNCING_INITIALIZED = False
+
+def ensure_pronouncing_loaded():
+    """
+    Ensure pronouncing CMUdict is loaded (singleton pattern)
+
+    First call triggers loading, subsequent calls are instant
+    """
+    global _PRONOUNCING_INITIALIZED
+    if not _PRONOUNCING_INITIALIZED and HAS_PRONOUNCING:
+        try:
+            # Trigger CMUdict loading
+            _ = pronouncing.phones_for_word('test')
+            _PRONOUNCING_INITIALIZED = True
+        except Exception:
+            pass
+    return _PRONOUNCING_INITIALIZED
+
 
 def extract_phonemes(word):
     """
@@ -35,6 +54,9 @@ def extract_phonemes(word):
     Returns:
         dict with phoneme data (ARPABET and IPA)
     """
+    # Ensure pronouncing dictionary is loaded (cached after first call)
+    ensure_pronouncing_loaded()
+
     result = {
         'word': word,
         'source': None,

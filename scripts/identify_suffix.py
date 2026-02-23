@@ -6,6 +6,35 @@ import json
 import sys
 from pathlib import Path
 
+# Global cache for suffix database (singleton pattern)
+_SUFFIX_DB_CACHE = {}
+
+def load_suffix_database(db_path='data/unified_suffixes.json'):
+    """
+    Load suffix database with caching (singleton pattern)
+
+    Args:
+        db_path: Path to suffix database
+
+    Returns:
+        Loaded database dict
+    """
+    # Resolve path relative to plugin directory
+    plugin_dir = Path(__file__).parent.parent
+    full_path = plugin_dir / db_path
+
+    # Use string path as cache key
+    cache_key = str(full_path)
+
+    if cache_key not in _SUFFIX_DB_CACHE:
+        try:
+            with open(full_path, 'r') as f:
+                _SUFFIX_DB_CACHE[cache_key] = json.load(f)
+        except FileNotFoundError:
+            _SUFFIX_DB_CACHE[cache_key] = None
+
+    return _SUFFIX_DB_CACHE[cache_key]
+
 def identify_suffix(word, db_path='data/unified_suffixes.json', min_stem_length=2):
     """
     Identify suffix in word using longest matching suffix from database
@@ -22,14 +51,10 @@ def identify_suffix(word, db_path='data/unified_suffixes.json', min_stem_length=
     original_word = word
     word_lower = word.lower()
 
-    # Resolve path relative to plugin directory
-    plugin_dir = Path(__file__).parent.parent
-    db_path = plugin_dir / db_path
+    # Load suffix database (cached after first call)
+    db = load_suffix_database(db_path)
 
-    try:
-        with open(db_path, 'r') as f:
-            db = json.load(f)
-    except FileNotFoundError:
+    if db is None:
         # Return basic analysis without database
         return {
             'word': original_word,
