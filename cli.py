@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 
 
-def aggregate_results(suffix_result, spacy_result, wordnet_result):
+def aggregate_results(suffix_result, spacy_result, wordnet_result, phoneme_result=None):
     """
     Aggregate results from multiple tools into unified analysis
 
@@ -23,6 +23,7 @@ def aggregate_results(suffix_result, spacy_result, wordnet_result):
         suffix_result: Result from suffix identification
         spacy_result: Result from spaCy analysis
         wordnet_result: Result from WordNet analysis
+        phoneme_result: Result from phoneme extraction (optional)
 
     Returns:
         Aggregated result dictionary
@@ -108,6 +109,10 @@ def aggregate_results(suffix_result, spacy_result, wordnet_result):
         # Also expose synsets at top level for convenience
         if wordnet_result.get('synsets'):
             result['synsets'] = wordnet_result.get('synsets', [])[:2]
+
+    # Add phoneme data if available
+    if phoneme_result and not phoneme_result.get('error'):
+        result['phonemes'] = phoneme_result
 
     return result
 
@@ -195,7 +200,7 @@ def handle_suffix(args):
         sys.exit(1)
 
 
-def analyze_single_word(word, context=None):
+def analyze_single_word(word, context=None, include_phonemes=False):
     """Analyze a single word"""
     from scripts.identify_suffix import identify_suffix
     from scripts.extract_spacy_features import extract_spacy_features
@@ -216,26 +221,47 @@ def analyze_single_word(word, context=None):
     except Exception:
         wordnet_result = {'error': 'WordNet analysis failed'}
 
+    # Extract phonemes if requested
+    phoneme_result = None
+    if include_phonemes:
+        try:
+            from scripts.extract_phonemes import extract_morpheme_phonemes
+            stem = suffix_result.get('stem')
+            suffix = suffix_result.get('suffix')
+            phoneme_result = extract_morpheme_phonemes(word, stem=stem, suffix=suffix)
+        except Exception as e:
+            phoneme_result = {'error': f'Phoneme extraction failed: {str(e)}'}
+
     # Aggregate results
-    return aggregate_results(suffix_result, spacy_result, wordnet_result)
+    return aggregate_results(suffix_result, spacy_result, wordnet_result, phoneme_result)
 
 
 def handle_analyze(args):
     """Handle full morphological analysis command"""
     try:
+        include_phonemes = getattr(args, 'phonemes', False)
+
         # Determine if batch mode or single word
         if args.words:
             # Batch mode
             words = [w.strip() for w in args.words.split(',') if w.strip()]
             results = []
             for word in words:
-                result = analyze_single_word(word, context=getattr(args, 'context', None))
+                result = analyze_single_word(
+                    word,
+                    context=getattr(args, 'context', None),
+                    include_phonemes=include_phonemes
+                )
                 results.append(result)
             output = format_output(results, args)
             print(output)
         else:
             # Single word mode
-            result = analyze_single_word(args.word, context=getattr(args, 'context', None))
+            result = analyze_single_word(
+                args.word,
+                context=getattr(args, 'context', None),
+                include_phonemes=include_phonemes
+            )
             output = format_output(result, args)
             print(output)
 
@@ -354,6 +380,11 @@ def main():
         '--no-color',
         action='store_true',
         help='Disable color output'
+    )
+    analyze_parser.add_argument(
+        '--phonemes',
+        action='store_true',
+        help='Include phoneme representations (ARPABET and IPA)'
     )
 
     # Parse arguments

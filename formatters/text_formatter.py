@@ -73,6 +73,20 @@ def format_single_result(data: Dict[str, Any]) -> str:
             feat_str = ', '.join(f"{k}={v}" for k, v in features.items())
             lines.append(f"Morphological Features: {feat_str}")
 
+    # Phonemes
+    if 'phonemes' in data and data['phonemes']:
+        phonemes = data['phonemes']
+        if 'word' in phonemes and phonemes['word'].get('arpabet'):
+            lines.append(f"Phonemes (ARPABET): {phonemes['word']['arpabet']}")
+        if 'word' in phonemes and phonemes['word'].get('ipa'):
+            lines.append(f"Phonemes (IPA): {phonemes['word']['ipa']}")
+
+        # Show stem and suffix phonemes if available
+        if 'stem' in phonemes and phonemes['stem'].get('arpabet'):
+            lines.append(f"  Stem phonemes: {phonemes['stem']['arpabet']}")
+        if 'suffix' in phonemes and phonemes['suffix'].get('arpabet'):
+            lines.append(f"  Suffix phonemes: {phonemes['suffix']['arpabet']}")
+
     return '\n'.join(lines)
 
 
